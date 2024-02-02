@@ -1,7 +1,8 @@
 import React from 'react';
-import {Logo,LogoutBtn, container} from "../index";
 import { Link, useNavigate } from 'react-router-dom';
 import { useSelector } from 'react-redux';
+import { Logo } from '../logo.jsx';
+import  {Container, LogoutBtn}  from '../index.js';
 
 
 /**
@@ -11,9 +12,7 @@ import { useSelector } from 'react-redux';
 
 export const Header = (props) => {
 
-    const authStatus = useSelector((state)=>{
-        state.auth.status
-    })
+    const authStatus = useSelector((state) => state.auth?.status)
 
     const navigate = useNavigate();
 
@@ -45,34 +44,35 @@ export const Header = (props) => {
       },
       ]
     
-  return(
-   <header >
-    <container>
-        <nav>
-            <div>
+      return (
+        <header className='py-3 shadow bg-gray-500'>
+          <Container>
+            <nav className='flex'>
+              <div className='mr-4'>
                 <Link to='/'>
-                    <Logo></Logo>
-                </Link>
-            </div>
-            <ul>
-                {navItems.map((item)=>{
-                    item.active ? (
-                        <li key={item.name}>
-                            <button
-                            onClick={()=>navigate(item.slug)}
-                            className='inline-bock px-6 py-2 duration-200 hover:bg-blue-100 rounded-full'
-                            >{item.name}</button>
-                        </li>
-                    ) : null
-                })}
-                {authStatus && (
-                    <li>
-                        <LogoutBtn/>
-                    </li>
+                  <Logo width='70px'   />
+    
+                  </Link>
+              </div>
+              <ul className='flex ml-auto'>
+                {navItems.map((item) => 
+                item.active ? (
+                  <li key={item.name}>
+                    <button
+                    onClick={() => navigate(item.slug)}
+                    className='inline-bock px-6 py-2 duration-200 hover:bg-blue-100 rounded-full'
+                    >{item.name}</button>
+                  </li>
+                ) : null
                 )}
-            </ul>
-        </nav>
-    </container>
-   </header>
-   )
+                {authStatus && (
+                  <li>
+                    <LogoutBtn />
+                  </li>
+                )}
+              </ul>
+            </nav>
+            </Container>
+        </header>
+      )
   }
